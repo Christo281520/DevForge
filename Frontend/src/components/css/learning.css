@@ -1,0 +1,75 @@
+/* MAIN */
+.learning-home {
+  min-height: 100vh;
+  background: #020617;
+  color: white;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+/* HEADER */
+.learning-header h1 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.learning-header p {
+  color: #94a3b8;
+  margin-bottom: 40px;
+}
+
+/* GRID */
+.language-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+
+/* CARD */
+.language-card {
+  width: 220px;
+  padding: 25px;
+  border-radius: 16px;
+
+  background: #0f172a;
+  border: 1px solid #1e293b;
+
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  text-align: center;
+}
+
+/* ICON */
+.icon {
+  font-size: 40px;
+  margin-bottom: 10px;
+  transition: 0.3s;
+}
+
+/* TEXT */
+.language-card h3 {
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.language-card p {
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+/* HOVER EFFECT */
+.language-card:hover {
+  transform: translateY(-8px) scale(1.05);
+  border-color: #22c55e;
+
+  box-shadow:
+    0 10px 25px rgba(0,0,0,0.5),
+    0 0 20px rgba(34,197,94,0.3);
+}
+
+/* ICON ANIMATION */
+.language-card:hover .icon {
+  transform: scale(1.2);
+}

@@ -1,0 +1,104 @@
+/* BACKGROUND */
+.challenge-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items:center;
+
+  background:
+    linear-gradient(180deg, #020617, #0f172a, #020617),
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,0.03) 0px,
+      rgba(255,255,255,0.03) 1px,
+      transparent 1px,
+      transparent 50px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,0.03) 0px,
+      rgba(255,255,255,0.03) 1px,
+      transparent 1px,
+      transparent 50px
+    );
+
+  background-blend-mode: overlay;
+  animation: moveGrid 40s linear infinite;
+}
+
+/* GRID ANIMATION */
+@keyframes moveGrid {
+  from {
+    background-position: 0 0, 0 0, 0 0;
+  }
+  to {
+    background-position: 0 0, 100px 100px, 100px 100px;
+  }
+}
+
+/* WRAPPER */
+.challenge-wrapper {
+  width: 100%;
+  max-width: 1000px;
+  text-align: center;
+}
+
+/* TITLE */
+.title {
+  color: white;
+  margin-bottom: 30px;
+}
+
+/* LANGUAGE SECTION */
+.language-section {
+  width: 100%;
+}
+
+/* GRID */
+.language-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+}
+
+/* CARD */
+.language-card {
+  width: 180px;
+  background: #0f172a;
+  border: 1px solid #1e293b;
+  padding: 25px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.3s;
+  color: white;
+}
+
+.language-card:hover {
+  transform: translateY(-6px) scale(1.05);
+  border-color: #00c6ff;
+  box-shadow: 0 0 25px rgba(0,198,255,0.4);
+}
+
+.language-card p {
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+/* PROBLEM GRID */
+.problem-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* BACK BUTTON */
+.back-btn {
+  margin-bottom: 20px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #1e293b;
+  color: white;
+  cursor: pointer;
+}

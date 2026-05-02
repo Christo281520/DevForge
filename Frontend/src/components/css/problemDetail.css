@@ -1,0 +1,91 @@
+.problem-detail-container {
+  display: flex;
+  height: 100vh;
+  background: #020617;
+  color: white;
+}
+.problem-left {
+  width: 50%;
+  padding: 30px;
+  overflow-y: auto;
+  border-right: 1px solid #333;
+}
+.problem-right {
+  width: 50%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.problem-right textarea {
+  flex: 1;
+  background: #0f172a;
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 10px;
+  resize: none;
+}
+.editor-buttons {
+  margin-top: 10px;
+}
+.run-btn {
+  background: #00c6ff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  color: black;
+  cursor: pointer;
+}
+/* HEADER (language dropdown) */
+.editor-header {
+  margin-bottom: 10px;
+}
+
+/* DROPDOWN */
+.language-select {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: none;
+  background: #1e293b;
+  color: white;
+}
+
+/* TEXTAREA */
+.problem-right textarea {
+  flex: 1;
+  background: #0f172a;
+  color: #e2e8f0;
+  border: none;
+  padding: 15px;
+  border-radius: 10px;
+  resize: none;
+  font-family: monospace;
+}
+/* RESULT */
+.result {
+  background: #111827;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+/* TEST CASE SECTION */
+.test-cases {
+  margin-top: 20px;
+}
+
+/* SINGLE TEST */
+.test-case {
+  background: #111827;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+/* RESULT */
+.pass {
+  color: #22c55e;
+}
+
+.fail {
+  color: #ef4444;
+}

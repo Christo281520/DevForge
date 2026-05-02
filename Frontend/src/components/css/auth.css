@@ -1,0 +1,77 @@
+.auth-page {
+  background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #1a73e8);
+  filter: brightness(0.9);
+}
+.auth-card {
+  width: 350px;
+  padding: 40px;
+  border-radius: 20px;
+  text-align: center;
+  color: white;
+  position: relative;
+  z-index: 2;
+  transform: scale(0.98);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+/* Inputs */
+.input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+}
+
+/* Button */
+.auth-btn {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 8px;
+  background: #00c6ff;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.auth-btn:hover {
+  background: #0072ff;
+  box-shadow: 0 0 15px rgba(0,198,255,0.7);
+}
+
+/* Text */
+.switch-text span {
+  color: #00c6ff;
+  cursor: pointer;
+}
+.back-btn {
+    position: fixed;   
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+.password-field {
+  position: relative;
+  width: 100%;
+}
+.password-field span {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 16px;
+}
