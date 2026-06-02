@@ -5,46 +5,52 @@ const Leaderboard = () => {
 
   const [users, setUsers] = useState([])
 
+  // 🔥 FETCH LEADERBOARD
   useEffect(() => {
 
-    const solvedProblems = JSON.parse(localStorage.getItem("solvedProblems")) || []
-    const streakData = JSON.parse(localStorage.getItem("streakData")) || { currentStreak: 0 }
+    fetch('http://127.0.0.1:8000/api/leaderboard/')
 
-    const currentUser = {
-      name: "You",
-      solved: solvedProblems.length,
-      streak: streakData.currentStreak,
-    }
+      .then((response) => response.json())
 
-    currentUser.score = currentUser.solved * 10 + currentUser.streak * 5
+      .then((data) => {
 
-    const dummyUsers = [
-      { name: "Alice", solved: 8, streak: 5 },
-      { name: "Bob", solved: 6, streak: 2 },
-      { name: "Charlie", solved: 9, streak: 7 },
-      { name: "David", solved: 4, streak: 1 }
-    ]
+        console.log(data)
 
-    dummyUsers.forEach(u => {
-      u.score = u.solved * 10 + u.streak * 5
-    })
+        setUsers(data)
 
-    const allUsers = [currentUser, ...dummyUsers]
-    allUsers.sort((a, b) => b.score - a.score)
+      })
 
-    setUsers(allUsers)
+      .catch((error) => {
+
+        console.log(error)
+
+      })
 
   }, [])
 
-  // 🏆 Medal Logic
-  const getRankDisplay = (index) => {
-    if (index === 0) return "🥇"
-    if (index === 1) return "🥈"
-    if (index === 2) return "🥉"
-    return `#${index + 1}`
+  // 🏆 MEDALS
+  const getRankDisplay = (rank) => {
+
+    if (rank === 1) return "🥇"
+
+    if (rank === 2) return "🥈"
+
+    if (rank === 3) return "🥉"
+
+    return `#${rank}`
+  }
+
+  // 🔥 SCORE LOGIC
+  const getScore = (user) => {
+
+    return (
+      user.solved_count * 10 +
+      user.streak * 5
+    )
   }
 
   return (
+
     <div className="leaderboard-container">
 
       <h2>🏆 Leaderboard</h2>
@@ -52,25 +58,49 @@ const Leaderboard = () => {
       <div className="leaderboard-list">
 
         {users.map((user, index) => (
+
           <div
             key={index}
-            className={`leader-card ${index < 3 ? "top-rank" : ""}`}
+            className={`leader-card ${
+              user.rank <= 3
+                ? "top-rank"
+                : ""
+            }`}
           >
 
+            {/* 🏅 RANK */}
             <div className="rank">
-              {getRankDisplay(index)}
+
+              {getRankDisplay(user.rank)}
+
             </div>
 
+            {/* 👤 USER */}
             <div className="user-info">
-              <h4>{user.name}</h4>
-              <p>{user.solved} solved • 🔥 {user.streak}</p>
+
+              <h4>{user.username}</h4>
+
+              <p>
+
+                {user.solved_count} solved
+
+                {" • "}
+
+                🔥 {user.streak}
+
+              </p>
+
             </div>
 
+            {/* ⭐ SCORE */}
             <div className="score">
-              {user.score}
+
+              {getScore(user)}
+
             </div>
 
           </div>
+
         ))}
 
       </div>

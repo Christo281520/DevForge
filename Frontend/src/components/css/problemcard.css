@@ -1,89 +1,148 @@
-.problem-card {
-  background: white;
-  padding: 20px;
-  border-radius: 14px;
+/* 🔥 ROW CARD */
+.problem-row {
+
+  width: 100%;
+
+  background: linear-gradient(
+    145deg,
+    #0f172a,
+    #111827
+  );
+
+  border: 1px solid #1e293b;
+
+  border-radius: 18px;
+
+  padding: 24px 28px;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  transition: 0.3s ease;
+
+  margin-bottom: 20px;
+}
+
+/* 🔥 HOVER */
+.problem-row:hover {
+
+  transform: translateY(-4px);
+
+  border-color: #00c6ff;
+
+  box-shadow:
+    0 0 20px rgba(0,198,255,0.15),
+    0 10px 30px rgba(0,0,0,0.4);
+}
+
+/* 🔥 LEFT SIDE */
+.problem-left-side {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  height: 180px;
+  gap: 12px;
 }
-.problem-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 18px 35px rgba(0,0,0,0.15);
-}
-.problem-header {
+
+/* 🔥 TITLE ROW */
+.problem-title-row {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: 15px;
 }
-.problem-header h5 {
-  font-weight: 600;
+
+.problem-title-row h3 {
+  margin: 0;
+  color: #f8fafc;
+  font-size: 1.3rem;
 }
-.badge {
-  padding: 5px 12px;
-  border-radius: 20px;
+
+/* 🔥 META */
+.problem-meta {
+  display: flex;
+  gap: 25px;
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+/* 🔥 BADGES */
+.difficulty-badge {
+
+  padding: 6px 14px;
+
+  border-radius: 30px;
+
   font-size: 12px;
-  font-weight: 600;
+
+  font-weight: bold;
+
   color: white;
 }
+
 .easy {
-  background: #22c55e; 
-  color: #22c55e;
-  border: 1px solid #22c55e;
-  box-shadow: 0 0 8px rgba(34,197,94,0.6);
+  background: #22c55e;
 }
+
 .medium {
   background: #f59e0b;
-  color: #f59e0b;
-  border: 1px solid #f59e0b;
-  box-shadow: 0 0 8px rgba(245,158,11,0.6);
 }
 
 .hard {
   background: #ef4444;
-  color: #ef4444;
-  border: 1px solid #ef4444;
-  box-shadow: 0 0 8px rgba(239,68,68,0.6);
-}
-.topic {
-  margin: 10px 0 5px;
-  color: #555;
-  font-size: 14px;
-}
-.stats {
-  font-size: 12px;
-  color: #888;
-  margin-bottom: 10px;
-}
-.problem-footer {
-  display: flex;
-  justify-content: flex-start;
-}
-/* SOLVED STYLE */
-.solved-card {
-  border: 2px solid #22c55e;
-  background: #f0fdf4;
-}
-.solve-btn {
-  border: none;
-  padding: 8px 14px;
-  border-radius: 8px;
-  background: #0d6efd;
-  color: white;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.solve-btn:hover {
-  background: #0056d2;
 }
 
-/* LEFT BORDER */
-.problem-card.easy-border {
-  border-left: 5px solid #22c55e;
+/* 🚀 BUTTON */
+.solve-btn {
+
+  border: none;
+
+  padding: 12px 22px;
+
+  border-radius: 12px;
+
+  background: linear-gradient(
+    90deg,
+    #00c6ff,
+    #0072ff
+  );
+
+  color: white;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition: 0.3s ease;
+
+  font-size: 15px;
 }
-.problem-card.medium-border {
-  border-left: 5px solid #f59e0b;
+
+.solve-btn:hover {
+
+  transform: scale(1.05);
+
+  opacity: 0.95;
 }
-.problem-card.hard-border {
-  border-left: 5px solid #ef4444;
+
+/* 📱 RESPONSIVE */
+@media (max-width: 768px) {
+
+  .problem-row {
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 20px;
+  }
+
+  .problem-right-side {
+    width: 100%;
+  }
+
+  .solve-btn {
+    width: 100%;
+  }
+
 }

@@ -13,6 +13,8 @@ import Register from './pages/Register'
 import About from './pages/About'
 import ProblemDetail from './pages/ProblemDetail'
 import PythonLearning from './pages/PythonLearning'
+import Submissions from './pages/Submissions'
+import Profile from './pages/Profile'
 const Layout = () => {
   const location = useLocation()
   const hideNavbar =
@@ -31,11 +33,13 @@ const Layout = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/home" element={<Home />} />
         <Route path="/challenge" element={<Challenges />} />
-        <Route path="/problem" element={<ProblemDetail />} />
+        <Route path="/problems/:id" element={<ProblemDetail />} />
         <Route path="/analytics" element={<Analytics />} />
         <Route path="/leaderboard" element={<LeaderBoard />} />
         <Route path="/learning" element={<Learning />} />
         <Route path="/learning/python" element={<PythonLearning />} />
+        <Route path="/submissions" element={<Submissions />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
       {showFooter && <Footer />}
     </>

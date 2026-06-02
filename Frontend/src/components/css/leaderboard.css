@@ -93,3 +93,32 @@
   border: 1px solid #cd7f32;
   box-shadow: 0 0 12px rgba(205, 127, 50, 0.4);
 }
+/* 🔥 SMOOTHER */
+.leader-card {
+  backdrop-filter: blur(10px);
+}
+
+/* 👤 USERNAME */
+.user-info h4 {
+  font-size: 18px;
+  color: #f8fafc;
+}
+
+/* 📱 MOBILE */
+@media (max-width: 768px) {
+
+  .leader-card {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .user-info {
+    text-align: center;
+  }
+
+  .score {
+    text-align: center;
+  }
+
+}

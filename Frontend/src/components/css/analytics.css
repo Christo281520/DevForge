@@ -94,3 +94,72 @@
 .l1 { background: #22c55e; }
 .l2 { background: #16a34a; }
 .l3 { background: #15803d; }
+
+/* 📊 STATS */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin: 40px auto;
+  max-width: 900px;
+}
+
+.stat-card {
+  background: #1e293b;
+  padding: 25px;
+  border-radius: 16px;
+  text-align: center;
+  border: 1px solid #334155;
+}
+
+.stat-card h3 {
+  margin-bottom: 10px;
+  color: #cbd5e1;
+}
+
+.stat-card p {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #00c6ff;
+}
+
+/* 💻 LANGUAGES */
+.language-section {
+  max-width: 900px;
+  margin: 50px auto;
+}
+
+.language-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.language-card {
+  background: #1e293b;
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid #334155;
+  text-align: center;
+}
+
+/* 🔥 ACTIVITY */
+.activity-section {
+  max-width: 900px;
+  margin: 50px auto;
+}
+
+.activity-card {
+  background: #1e293b;
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid #334155;
+  margin-top: 15px;
+}
+
+.circle-label {
+  text-align: center;
+  margin-top: 10px;
+  color: #cbd5e1;
+}

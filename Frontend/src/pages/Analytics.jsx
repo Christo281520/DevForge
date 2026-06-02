@@ -3,90 +3,108 @@ import '../components/css/analytics.css'
 
 const Analytics = () => {
 
-  const [stats, setStats] = useState({ total: 0, solved: 0 })
+  const [analytics, setAnalytics] = useState(null)
+
   const [animatedPercent, setAnimatedPercent] = useState(0)
+
   const [profileImage, setProfileImage] = useState(null)
-  const [streak, setStreak] = useState(0)
-  const [heatmapData, setHeatmapData] = useState({})
 
-  const problems = [
-    "Two Sum",
-    "Palindrome Number",
-    "Valid Parentheses",
-    "Merge Two Sorted Lists",
-    "3Sum",
-    "Container With Most Water",
-    "Median of Two Sorted Arrays",
-    "Merge k Sorted Lists",
-    "Trapping Rain Water",
-    "Longest Substring Without Repeating Characters"
-  ]
+  const token = localStorage.getItem("token")
 
+  // 🔥 FETCH ANALYTICS
   useEffect(() => {
 
-    const solvedProblems = JSON.parse(localStorage.getItem("solvedProblems")) || []
-    const savedImage = localStorage.getItem("profileImage")
-    const streakData = JSON.parse(localStorage.getItem("streakData"))
-    const heatmap = JSON.parse(localStorage.getItem("heatmapData")) || {}
+    fetch(
+      'http://127.0.0.1:8000/api/analytics/',
+      {
+        headers: {
+          'Authorization': `Token ${token}`
+        }
+      }
+    )
+      .then((response) => response.json())
 
-    if (savedImage) setProfileImage(savedImage)
-    if (streakData) setStreak(streakData.currentStreak)
+      .then((data) => {
 
-    setHeatmapData(heatmap)
+        console.log(data)
 
-    setStats({
-      total: problems.length,
-      solved: solvedProblems.length
-    })
+        setAnalytics(data)
+
+      })
+
+      .catch((error) => {
+
+        console.log(error)
+
+      })
+
+    // 🔥 PROFILE IMAGE
+    const savedImage =
+      localStorage.getItem("profileImage")
+
+    if (savedImage) {
+
+      setProfileImage(savedImage)
+    }
 
   }, [])
 
-  const percent = stats.total
-    ? Math.round((stats.solved / stats.total) * 100)
-    : 0
-
-  // 🔥 animate %
+  // 🔥 ANIMATE SUCCESS RATE
   useEffect(() => {
+
+    if (!analytics) return
+
     let start = 0
+
     const interval = setInterval(() => {
+
       start++
-      if (start >= percent) {
-        start = percent
+
+      if (start >= analytics.success_rate) {
+
+        start = analytics.success_rate
+
         clearInterval(interval)
       }
+
       setAnimatedPercent(start)
+
     }, 15)
 
     return () => clearInterval(interval)
-  }, [percent])
 
-  // 📸 upload image
+  }, [analytics])
+
+  // 📸 PROFILE IMAGE
   const handleImageUpload = (e) => {
+
     const file = e.target.files[0]
+
     if (!file) return
 
     const reader = new FileReader()
+
     reader.onloadend = () => {
+
       setProfileImage(reader.result)
-      localStorage.setItem("profileImage", reader.result)
+
+      localStorage.setItem(
+        "profileImage",
+        reader.result
+      )
     }
+
     reader.readAsDataURL(file)
   }
 
-  // 📅 last 30 days
-  const getLast30Days = () => {
-    const days = []
-    for (let i = 29; i >= 0; i--) {
-      const d = new Date()
-      d.setDate(d.getDate() - i)
-      days.push(d.toISOString().split("T")[0])
-    }
-    return days
+  // 🔥 LOADING
+  if (!analytics) {
+
+    return <h1>Loading...</h1>
   }
 
-  const days = getLast30Days()
-
   return (
+
     <div className="analytics-container">
 
       {/* 🔝 TOP ROW */}
@@ -96,55 +114,142 @@ const Analytics = () => {
         <div className="profile-box">
 
           <div className="avatar">
+
             {profileImage ? (
-              <img src={profileImage} alt="profile" />
+
+              <img
+                src={profileImage}
+                alt="profile"
+              />
+
             ) : (
+
               <span>👤</span>
+
             )}
 
-            <input type="file" onChange={handleImageUpload} />
+            <input
+              type="file"
+              onChange={handleImageUpload}
+            />
+
           </div>
 
           <h3>User</h3>
-          <p>{stats.solved} / {stats.total} solved</p>
-          <p className="streak">🔥 {streak} day streak</p>
+
+          <p>
+            {analytics.solved_count} solved
+          </p>
+
+          <p className="streak">
+            🔥 {analytics.streak} day streak
+          </p>
 
         </div>
 
-        {/* 🔵 CIRCLE */}
+        {/* 🔵 SUCCESS RATE */}
         <div className="circle-box">
+
           <div className="circle">
+
             {animatedPercent}%
+
           </div>
+
+          <p className="circle-label">
+            Success Rate
+          </p>
+
         </div>
 
       </div>
 
-      {/* 📅 HEATMAP */}
-      <div className="heatmap-section">
+      {/* 📊 STATS */}
+      <div className="stats-grid">
 
-        <h3>Activity</h3>
+        <div className="stat-card">
 
-        <div className="heatmap">
+          <h3>Total Submissions</h3>
 
-          {days.map((day, i) => {
-            const val = heatmapData[day] || 0
-
-            let level = "l0"
-            if (val === 1) level = "l1"
-            else if (val === 2) level = "l2"
-            else if (val >= 3) level = "l3"
-
-            return (
-              <div
-                key={i}
-                className={`box ${level}`}
-                title={`${day} → ${val} solved`}
-              />
-            )
-          })}
+          <p>{analytics.total_submissions}</p>
 
         </div>
+
+        <div className="stat-card">
+
+          <h3>Passed</h3>
+
+          <p>{analytics.passed_count}</p>
+
+        </div>
+
+        <div className="stat-card">
+
+          <h3>Failed</h3>
+
+          <p>{analytics.failed_count}</p>
+
+        </div>
+
+      </div>
+
+      {/* 💻 LANGUAGE STATS */}
+      <div className="language-section">
+
+        <h2>Languages Used 💻</h2>
+
+        <div className="language-grid">
+
+          {analytics.language_stats.map(
+            (lang, index) => (
+
+              <div
+                key={index}
+                className="language-card"
+              >
+
+                <h3>{lang.language}</h3>
+
+                <p>{lang.total} submissions</p>
+
+              </div>
+
+            )
+          )}
+
+        </div>
+
+      </div>
+
+      {/* 🔥 RECENT ACTIVITY */}
+      <div className="activity-section">
+
+        <h2>Recent Activity 🔥</h2>
+
+        {analytics.recent_activity.map(
+          (item, index) => (
+
+            <div
+              key={index}
+              className="activity-card"
+            >
+
+              <h3>{item.problem}</h3>
+
+              <p>
+                💻 {item.language}
+              </p>
+
+              <p>
+                {item.status === "Passed"
+                  ? "✅ Passed"
+                  : "❌ Failed"}
+              </p>
+
+            </div>
+
+          )
+        )}
 
       </div>
 

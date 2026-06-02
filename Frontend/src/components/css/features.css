@@ -1,77 +1,101 @@
 .features-container {
-  padding: 60px 20px;
+
+  padding: 70px 30px;
+
+  background: #020617;
+
   text-align: center;
-  background: transparent; 
 }
 
 .features-container h2 {
+
+  color: white;
+
   margin-bottom: 40px;
-  font-weight: 600;
+
+  font-size: 2rem;
 }
 
-/* GRID */
 .features-grid {
+
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+
   gap: 25px;
 }
 
-/* CARD */
 .feature-card {
-  padding: 25px;
-  border-radius: 16px;
-  cursor: pointer;
-  transition: all 0.3s ease;
 
-  background: #ffffff;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  background: #0f172a;
+
+  border: 1px solid #1e293b;
+
+  border-radius: 18px;
+
+  padding: 30px;
+
+  cursor: pointer;
+
+  transition: 0.3s ease;
 }
 
 .feature-card:hover {
+
   transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+
+  border-color: #00c6ff;
+
+  box-shadow:
+    0 0 20px rgba(0,198,255,0.15);
 }
 
-/* ICON */
-.icon-circle {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 22px;
-  margin: 0 auto 15px;
-  transition: transform 0.3s ease;
-}
-
-/* TEXT */
 .feature-card h5 {
-  margin-bottom: 10px;
-  font-weight: 600;
+
+  color: white;
+
+  margin-top: 15px;
+
+  font-size: 18px;
 }
+
 .feature-card p {
-  font-size: 14px;
-  color: #555;
-}
-/* EXPLORE */
-.explore {
-  display: inline-block;
+
+  color: #94a3b8;
+
   margin-top: 10px;
-  font-weight: 500;
-  color: #0d6efd;
-  transition: 0.3s;
+
+  font-size: 14px;
 }
-.feature-card:hover .explore {
-  transform: translateX(6px);
+
+.icon-circle {
+
+  width: 65px;
+
+  height: 65px;
+
+  border-radius: 50%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  color: white;
+
+  font-size: 24px;
+
+  margin: 0 auto 15px;
 }
-.feature-card:hover .icon-circle {
-  animation: bounceIcon 0.5s ease;
-  transform: scale(1.1);
-}
-@keyframes bounceIcon {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-  100% { transform: translateY(0); }
+
+.explore {
+
+  display: inline-block;
+
+  margin-top: 15px;
+
+  color: #00c6ff;
+
+  font-weight: 600;
 }

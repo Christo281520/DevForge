@@ -1,91 +1,169 @@
 .problem-detail-container {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
   background: #020617;
   color: white;
 }
+
+/* 🔥 LEFT PANEL */
 .problem-left {
   width: 50%;
-  padding: 30px;
+  padding: 40px;
   overflow-y: auto;
-  border-right: 1px solid #333;
+  border-right: 1px solid #1e293b;
+  background: #020617;
 }
-.problem-right {
-  width: 50%;
+
+.problem-left h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #00c6ff;
+}
+
+.problem-left p {
+  line-height: 1.7;
+  color: #cbd5e1;
+}
+
+/* 🔥 BADGES */
+.problem-left b {
+  color: white;
+}
+
+/* 📦 EXAMPLES */
+.examples-section {
+  margin-top: 35px;
+}
+
+.example-box {
+  background: #0f172a;
+  border: 1px solid #1e293b;
+  border-radius: 16px;
   padding: 20px;
-  display: flex;
-  flex-direction: column;
-}
-.problem-right textarea {
-  flex: 1;
-  background: #0f172a;
-  color: white;
-  border: none;
-  padding: 15px;
-  border-radius: 10px;
-  resize: none;
-}
-.editor-buttons {
-  margin-top: 10px;
-}
-.run-btn {
-  background: #00c6ff;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 8px;
-  color: black;
-  cursor: pointer;
-}
-/* HEADER (language dropdown) */
-.editor-header {
-  margin-bottom: 10px;
+  margin-top: 15px;
 }
 
-/* DROPDOWN */
-.language-select {
-  padding: 6px 10px;
-  border-radius: 6px;
-  border: none;
-  background: #1e293b;
-  color: white;
-}
-
-/* TEXTAREA */
-.problem-right textarea {
-  flex: 1;
-  background: #0f172a;
-  color: #e2e8f0;
-  border: none;
-  padding: 15px;
-  border-radius: 10px;
-  resize: none;
-  font-family: monospace;
-}
-/* RESULT */
-.result {
-  background: #111827;
-  padding: 10px;
-  border-radius: 8px;
-  margin-top: 10px;
-}
-/* TEST CASE SECTION */
-.test-cases {
-  margin-top: 20px;
-}
-
-/* SINGLE TEST */
-.test-case {
-  background: #111827;
-  padding: 10px;
-  border-radius: 8px;
-  margin-bottom: 10px;
-}
-
-/* RESULT */
-.pass {
+.example-box h4 {
+  margin-bottom: 12px;
   color: #22c55e;
 }
 
+.example-box pre {
+  color: #e2e8f0;
+  white-space: pre-wrap;
+  line-height: 1.6;
+}
+
+/* 🔥 RIGHT PANEL */
+.problem-right {
+  width: 50%;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  background: #0f172a;
+}
+
+/* 🧠 CODE EDITOR */
+.problem-right textarea {
+  flex: 1;
+  background: #111827;
+  color: #f8fafc;
+  border: 1px solid #334155;
+  padding: 20px;
+  border-radius: 16px;
+  resize: none;
+  font-family: monospace;
+  font-size: 15px;
+  line-height: 1.6;
+  outline: none;
+  transition: 0.3s;
+}
+
+.problem-right textarea:focus {
+  border-color: #00c6ff;
+  box-shadow: 0 0 12px rgba(0,198,255,0.3);
+}
+
+/* 🚀 RUN BUTTON */
+.run-btn {
+  margin-top: 18px;
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  border: none;
+  padding: 14px 20px;
+  border-radius: 12px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 15px;
+}
+
+.run-btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+/* 🧪 TEST CASES */
+.testcase-section {
+  margin-top: 30px;
+}
+
+.testcase-section h3 {
+  margin-bottom: 15px;
+  color: #00c6ff;
+}
+
+.testcase-box {
+  background: #111827;
+  border: 1px solid #1e293b;
+  border-radius: 14px;
+  padding: 18px;
+  margin-bottom: 15px;
+}
+
+.testcase-box p {
+  margin: 8px 0;
+  color: #cbd5e1;
+}
+
+/* ✅ PASS */
+.pass {
+  color: #22c55e;
+  font-weight: bold;
+}
+
+/* ❌ FAIL */
 .fail {
   color: #ef4444;
+  font-weight: bold;
+}
+
+/* 🔥 SCROLLBAR */
+.problem-left::-webkit-scrollbar,
+.problem-right textarea::-webkit-scrollbar {
+  width: 6px;
+}
+
+.problem-left::-webkit-scrollbar-thumb,
+.problem-right textarea::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 10px;
+}
+
+/* 📱 RESPONSIVE */
+@media (max-width: 900px) {
+
+  .problem-detail-container {
+    flex-direction: column;
+  }
+
+  .problem-left,
+  .problem-right {
+    width: 100%;
+  }
+
+  .problem-right {
+    min-height: 600px;
+  }
+
 }

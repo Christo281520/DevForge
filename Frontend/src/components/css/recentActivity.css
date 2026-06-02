@@ -1,0 +1,49 @@
+.activity-container {
+
+  max-width: 1200px;
+
+  margin: 40px auto;
+
+  padding: 0 20px;
+}
+
+.activity-container h2 {
+
+  color: white;
+
+  margin-bottom: 20px;
+}
+
+.activity-card {
+
+  background: #0f172a;
+
+  border: 1px solid #1e293b;
+
+  border-radius: 18px;
+
+  padding: 25px;
+}
+
+.activity-item {
+
+  display: flex;
+
+  gap: 12px;
+
+  padding: 12px 0;
+
+  color: white;
+
+  border-bottom: 1px solid #1e293b;
+}
+
+.activity-item:last-child {
+
+  border-bottom: none;
+}
+
+.activity-card p {
+
+  color: #94a3b8;
+}

@@ -1,27 +1,32 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import ProblemCard from '../components/ProblemCard'
 import '../components/css/challenge.css'
 
 const Challenges = () => {
 
   const [selectedLanguage, setSelectedLanguage] = useState(null)
+  const [problems, setProblems] = useState([])
 
   const languages = ["Python", "Java", "JavaScript", "C", "C++"]
 
-  const problems = [
-    { id:1, title:"Two Sum", difficulty:"Easy", topic:"Arrays", lang:"JavaScript" },
-    { id:2, title:"Palindrome Number", difficulty:"Easy", topic:"Math", lang:"Python" },
-    { id:3, title:"Valid Parentheses", difficulty:"Easy", topic:"Stack", lang:"Java" },
-    { id:4, title:"Merge Two Sorted Lists", difficulty:"Easy", topic:"Linked List", lang:"C++" },
-    { id:5, title:"3Sum", difficulty:"Medium", topic:"Arrays", lang:"JavaScript" },
-    { id:6, title:"Container With Most Water", difficulty:"Medium", topic:"Two Pointers", lang:"Python" },
-    { id:7, title:"Median of Two Sorted Arrays", difficulty:"Hard", topic:"Binary Search", lang:"Java" },
-    { id:8, title:"Merge k Sorted Lists", difficulty:"Hard", topic:"Heap", lang:"C" },
-    { id:9, title:"Trapping Rain Water", difficulty:"Hard", topic:"Stack", lang:"C++" },
-    { id:10, title:"Longest Substring Without Repeating Characters", difficulty:"Medium", topic:"Strings", lang:"JavaScript" }
-  ]
+  useEffect(() => {
 
-  const filteredProblems = problems.filter(p => p.lang === selectedLanguage)
+  fetch('http://127.0.0.1:8000/api/problems/')
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data)
+      setProblems(data)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+
+}, [])
+
+  
+  const filteredProblems = problems.filter(
+  p => p.language === selectedLanguage
+)
 
   return (
     <div className="challenge-container">
@@ -68,10 +73,11 @@ const Challenges = () => {
               {filteredProblems.map(problem => (
                 <ProblemCard
                   key={problem.id}
+                  id={problem.id}
                   title={problem.title}
                   difficulty={problem.difficulty}
                   topic={problem.topic}
-                  language={problem.lang}
+                  language={problem.language}
                 />
               ))}
             </div>

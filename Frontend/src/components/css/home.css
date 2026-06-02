@@ -1,37 +1,10 @@
 .home-container {
+
   min-height: 100vh;
 
-  background:
-    linear-gradient(180deg, #020617, #0f172a, #020617),
-    repeating-linear-gradient(
-      0deg,
-      rgba(255,255,255,0.03) 0px,
-      rgba(255,255,255,0.03) 1px,
-      transparent 1px,
-      transparent 50px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      rgba(255,255,255,0.03) 0px,
-      rgba(255,255,255,0.03) 1px,
-      transparent 1px,
-      transparent 50px
-    );
-  background-blend-mode: overlay;
-  animation: moveGrid 40s linear infinite;
-}
-@keyframes moveGrid {
-  from {
-    background-position: 0 0, 0 0, 0 0;
-  }
-  to {
-    background-position: 0 0, 100px 100px, 100px 100px;
-  }
-}
-.home-container::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 20% 30%, rgba(0,198,255,0.1), transparent 40%);
-  pointer-events: none;
+  background: #020617;
+
+  color: white;
+
+  padding-bottom: 40px;
 }

@@ -1,0 +1,159 @@
+.submissions-container {
+
+  min-height: 100vh;
+
+  background: #020617;
+
+  color: white;
+
+  padding: 40px;
+}
+
+/* 🔥 TITLE */
+.submissions-container h1 {
+
+  margin-bottom: 35px;
+
+  font-size: 2.2rem;
+}
+
+/* 🔥 EMPTY */
+.empty-state {
+
+  text-align: center;
+
+  margin-top: 100px;
+
+  color: #94a3b8;
+}
+
+/* 🔥 LIST */
+.submission-list {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 20px;
+}
+
+/* 🔥 CARD */
+.submission-card {
+
+  background: linear-gradient(
+    145deg,
+    #0f172a,
+    #111827
+  );
+
+  border: 1px solid #1e293b;
+
+  border-radius: 18px;
+
+  padding: 24px;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  transition: 0.3s ease;
+}
+
+/* 🔥 HOVER */
+.submission-card:hover {
+
+  transform: translateY(-4px);
+
+  border-color: #00c6ff;
+
+  box-shadow:
+    0 0 20px rgba(0,198,255,0.15);
+}
+
+/* 🔥 LEFT */
+.submission-left h2 {
+
+  margin-bottom: 12px;
+
+  color: #f8fafc;
+}
+
+/* 🔥 META */
+.submission-meta {
+
+  display: flex;
+
+  gap: 18px;
+
+  align-items: center;
+
+  color: #94a3b8;
+
+  font-size: 14px;
+}
+
+/* 🔥 LANGUAGE */
+.language-pill {
+
+  background: #1e293b;
+
+  padding: 6px 12px;
+
+  border-radius: 30px;
+
+  color: #00c6ff;
+
+  font-weight: bold;
+}
+
+/* 🔥 STATUS */
+.status {
+
+  padding: 10px 18px;
+
+  border-radius: 12px;
+
+  font-weight: bold;
+
+  min-width: 100px;
+
+  text-align: center;
+}
+
+/* ✅ PASSED */
+.passed {
+
+  background:
+    rgba(34,197,94,0.15);
+
+  color: #22c55e;
+
+  border: 1px solid #22c55e;
+}
+
+/* ❌ FAILED */
+.failed {
+
+  background:
+    rgba(239,68,68,0.15);
+
+  color: #ef4444;
+
+  border: 1px solid #ef4444;
+}
+
+/* 📱 MOBILE */
+@media (max-width: 768px) {
+
+  .submission-card {
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 20px;
+  }
+
+}

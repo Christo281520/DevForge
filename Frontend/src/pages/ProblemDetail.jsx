@@ -1,138 +1,482 @@
 import React, { useState, useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
-import { problemDetails } from '../data/problems'
+import Editor from '@monaco-editor/react'
+import { useParams } from 'react-router-dom'
 import '../components/css/problemDetail.css'
 
 const ProblemDetail = () => {
 
-  const location = useLocation()
-  const { title, difficulty, topic, language } = location.state || {}
+  const { id } = useParams()
 
-  const data = problemDetails[title]
+  const [problem, setProblem] = useState(null)
 
-  const [selectedLanguage] = useState(language || "JavaScript")
   const [code, setCode] = useState("")
+
   const [testResults, setTestResults] = useState([])
 
+  const token = localStorage.getItem("token")
+
+  // 🔥 STARTER CODE
   const starterCode = {
-    JavaScript: `function solution() {\n  return;\n}`,
-    Python: `def solution():\n    return`,
-    Java: `class Solution {\n  public static void main(String[] args) {\n  }\n}`,
-    C: `#include <stdio.h>\nint main() {\n  return 0;\n}`,
-    "C++": `#include <iostream>\nusing namespace std;\nint main() {\n  return 0;\n}`
+
+    JavaScript:
+`function solution() {
+  return;
+}`,
+
+    Python:
+`def solution():
+    return`,
+
+    Java:
+`class Solution {
+
+  public static void main(String[] args) {
+
   }
 
+}`,
+
+    C:
+`#include <stdio.h>
+
+int main() {
+
+  return 0;
+}`,
+
+    "C++":
+`#include <iostream>
+
+using namespace std;
+
+int main() {
+
+  return 0;
+}`
+  }
+
+  // 🔥 FETCH PROBLEM
   useEffect(() => {
-    setCode(starterCode[selectedLanguage])
-  }, [selectedLanguage])
 
-  const runCode = () => {
+    fetch(`http://127.0.0.1:8000/api/problems/${id}/`)
 
-    const results = data?.testCases.map((test) => {
-      const passed = code.includes("return")
+      .then((response) => response.json())
 
-      return {
+      .then((data) => {
+
+        console.log(data)
+
+        setProblem(data)
+
+        setCode(
+          starterCode[data.language] ||
+          starterCode["Python"]
+        )
+
+      })
+
+      .catch((error) => {
+
+        console.log(error)
+
+      })
+
+  }, [id])
+
+  // 🔥 RUN CODE
+  const runCode = async () => {
+
+  const results = []
+
+  for (const test of problem.test_cases) {
+
+    try {
+
+      const response = await fetch(
+        "http://127.0.0.1:8000/api/run-code/",
+        {
+
+          method: "POST",
+
+          headers: {
+
+            "Content-Type": "application/json",
+
+            "Authorization":
+              `Token ${token}`
+
+          },
+
+          body: JSON.stringify({
+
+            code: code,
+
+            language: problem.language,
+
+            input: test.input
+
+          })
+
+        }
+      )
+
+      const data = await response.json()
+
+      const passed =
+
+        data.output?.trim() ===
+        test.output?.trim()
+
+      results.push({
+
         input: test.input,
-        expected: test.expected,
-        status: passed ? "Passed" : "Failed"
+
+        expected: test.output,
+
+        actual: data.output,
+
+        status:
+
+          passed
+            ? "Passed"
+            : "Failed"
+
+      })
+
+    } catch (error) {
+
+      results.push({
+
+        input: test.input,
+
+        expected: test.output,
+
+        actual: "",
+
+        status: "Failed"
+
+      })
+
+      console.log(error)
+
+    }
+
+  }
+
+  setTestResults(results)
+
+  const allPassed =
+    results.every(
+      (r) => r.status === "Passed"
+    )
+
+  // SAVE SUBMISSION
+  try {
+
+    const response = await fetch(
+      "http://127.0.0.1:8000/api/submissions/",
+      {
+
+        method: "POST",
+
+        headers: {
+
+          "Content-Type": "application/json",
+
+          "Authorization":
+            `Token ${token}`
+
+        },
+
+        body: JSON.stringify({
+
+          problem: problem.id,
+
+          code: code,
+
+          language: problem.language,
+
+          status:
+            allPassed
+              ? "Passed"
+              : "Failed"
+
+        })
+
       }
-    })
+    )
 
-    setTestResults(results)
+    const data = await response.json()
 
-    const allPassed = results.every(r => r.status === "Passed")
+    console.log(data)
 
-    if (allPassed) {
+  } catch (error) {
 
-      // ✅ SOLVED TRACKING
-      let solved = JSON.parse(localStorage.getItem("solvedProblems")) || []
-      if (!solved.includes(title)) {
-        solved.push(title)
-        localStorage.setItem("solvedProblems", JSON.stringify(solved))
-      }
+    console.log(error)
 
-      // 🔥 STREAK SYSTEM
-      const today = new Date().toISOString().split("T")[0]
+  }
 
-      let streakData = JSON.parse(localStorage.getItem("streakData")) || {
+  // LOCAL TRACKING
+  if (allPassed) {
+
+    let solved =
+      JSON.parse(
+        localStorage.getItem(
+          "solvedProblems"
+        )
+      ) || []
+
+    if (
+      !solved.includes(problem.title)
+    ) {
+
+      solved.push(problem.title)
+
+      localStorage.setItem(
+        "solvedProblems",
+        JSON.stringify(solved)
+      )
+    }
+
+    const today =
+      new Date()
+        .toISOString()
+        .split("T")[0]
+
+    let streakData =
+      JSON.parse(
+        localStorage.getItem(
+          "streakData"
+        )
+      ) || {
+
         lastSolvedDate: null,
+
         currentStreak: 0
       }
 
-      if (streakData.lastSolvedDate !== today) {
+    if (
+      streakData.lastSolvedDate !==
+      today
+    ) {
 
-        const yesterday = new Date()
-        yesterday.setDate(yesterday.getDate() - 1)
-        const yesterdayStr = yesterday.toISOString().split("T")[0]
+      const yesterday =
+        new Date()
 
-        if (streakData.lastSolvedDate === yesterdayStr) {
-          streakData.currentStreak += 1
-        } else {
-          streakData.currentStreak = 1
-        }
+      yesterday.setDate(
+        yesterday.getDate() - 1
+      )
 
-        streakData.lastSolvedDate = today
-        localStorage.setItem("streakData", JSON.stringify(streakData))
+      const yesterdayStr =
+        yesterday
+          .toISOString()
+          .split("T")[0]
+
+      if (
+        streakData.lastSolvedDate ===
+        yesterdayStr
+      ) {
+
+        streakData.currentStreak += 1
+
+      } else {
+
+        streakData.currentStreak = 1
+
       }
 
-      // 🔥 HEATMAP DATA
-      let heatmap = JSON.parse(localStorage.getItem("heatmapData")) || {}
-      heatmap[today] = (heatmap[today] || 0) + 1
-      localStorage.setItem("heatmapData", JSON.stringify(heatmap))
+      streakData.lastSolvedDate =
+        today
+
+      localStorage.setItem(
+
+        "streakData",
+
+        JSON.stringify(streakData)
+
+      )
+
     }
+
+    let heatmap =
+      JSON.parse(
+        localStorage.getItem(
+          "heatmapData"
+        )
+      ) || {}
+
+    heatmap[today] =
+      (heatmap[today] || 0) + 1
+
+    localStorage.setItem(
+
+      "heatmapData",
+
+      JSON.stringify(heatmap)
+
+    )
+
+  }
+
+}
+
+  // 🔥 LOADING
+  if (!problem) {
+
+    return <h1>Loading...</h1>
   }
 
   return (
+
     <div className="problem-detail-container">
 
+      {/* 🔥 LEFT */}
       <div className="problem-left">
-        <h2>{title}</h2>
-        <p><b>Difficulty:</b> {difficulty}</p>
-        <p><b>Topic:</b> {topic}</p>
 
-        <p>{data?.description}</p>
+        <h2>{problem.title}</h2>
 
-        <h4>Example 1:</h4>
-        <pre>
-Input: {data?.examples[0].input}
-Output: {data?.examples[0].output}
-        </pre>
+        <p>
+          <b>Difficulty:</b>
+          {" "}
+          {problem.difficulty}
+        </p>
 
-        <h4>Example 2:</h4>
-        <pre>
-Input: {data?.examples[1].input}
-Output: {data?.examples[1].output}
-        </pre>
+        <p>
+          <b>Topic:</b>
+          {" "}
+          {problem.topic}
+        </p>
+
+        <p>
+          <b>Language:</b>
+          {" "}
+          {problem.language}
+        </p>
+
+        <p>
+          {problem.description}
+        </p>
+
+        {/* 🔥 EXAMPLES */}
+        <div className="examples-section">
+
+          <h3>Examples</h3>
+
+          {problem.examples?.map(
+            (example, index) => (
+
+              <div
+                key={index}
+                className="example-box"
+              >
+
+                <h4>
+                  Example {index + 1}
+                </h4>
+
+                <pre>
+
+Input: {example.input}
+
+Output: {example.output}
+
+                </pre>
+
+              </div>
+
+            )
+          )}
+
+        </div>
+
       </div>
 
+      {/* 🔥 RIGHT */}
       <div className="problem-right">
 
-        <p>Language: {selectedLanguage}</p>
+        {/* 🚀 MONACO EDITOR */}
+        <Editor
+          height="500px"
 
-        <textarea
+          language={
+            problem.language === "C++"
+              ? "cpp"
+              : problem.language.toLowerCase()
+          }
+
+          theme="vs-dark"
+
           value={code}
-          onChange={(e) => setCode(e.target.value)}
+
+          onChange={(value) =>
+            setCode(value)
+          }
+
+          options={{
+            fontSize: 15,
+
+            minimap: {
+              enabled: false
+            },
+
+            automaticLayout: true,
+
+            scrollBeyondLastLine: false
+          }}
         />
 
-        <button onClick={runCode}>Run Code</button>
+        {/* 🚀 BUTTON */}
+        <button
+          className="run-btn"
+          onClick={runCode}
+        >
+          Run Code
+        </button>
 
-        <div>
-          <h4>Test Cases</h4>
+        {/* 🔥 TEST CASES */}
+        <div className="testcase-section">
 
-          {data?.testCases.map((test, index) => (
-            <div key={index}>
-              <p><b>Input:</b> {test.input}</p>
-              <p><b>Expected:</b> {test.expected}</p>
+          <h3>Test Cases</h3>
 
-              {testResults[index] && (
+          {problem.test_cases?.map(
+            (test, index) => (
+
+              <div
+                key={index}
+                className="testcase-box"
+              >
+
                 <p>
-                  {testResults[index].status === "Passed"
-                    ? "✅ Passed"
-                    : "❌ Failed"}
+                  <b>Input:</b>
+                  {" "}
+                  {test.input}
                 </p>
-              )}
-            </div>
-          ))}
+
+                <p>
+                  <b>Expected:</b>
+                  {" "}
+                  {test.output}
+                </p>
+
+                {testResults[index] && (
+
+                  <p>
+
+                    {testResults[index]
+                      .status === "Passed"
+
+                      ? "✅ Passed"
+
+                      : "❌ Failed"}
+
+                  </p>
+
+                )}
+
+              </div>
+
+            )
+          )}
 
         </div>
 
